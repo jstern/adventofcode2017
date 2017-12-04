@@ -2,43 +2,60 @@ package ex1
 
 import "testing"
 
-func TestValueToAdd(t *testing.T) {
-	result := valueToAdd(1, 1)
-	if result != 1 {
+func TestIndex(t *testing.T) {
+	puz := puzzle{"11", 1}
+
+	i := puz.index(0)
+	if i != 0 {
 		t.Fail()
 	}
 
-	result = valueToAdd(1, 2)
-	if result != 0 {
+	i = puz.index(1)
+	if i != 1 {
+		t.Fail()
+	}
+
+	i = puz.index(2)
+	if i != 0 {
 		t.Fail()
 	}
 }
 
-func TestGetInt(t *testing.T) {
-	i := getInt("123", 1)
+func TestValueAt(t *testing.T) {
+	puz := puzzle{"12", 1}
+
+	i := puz.valueAt(0)
+	if i != 1 {
+		t.Fail()
+	}
+
+	i = puz.valueAt(1)
 	if i != 2 {
 		t.Fail()
 	}
-}
 
-func TestValuesToCompare(t *testing.T) {
-	f, s := valuesToCompare("32", 0)
-	if f != 3 {
-		t.Fail()
-	}
-	if s != 2 {
+	i = puz.valueAt(2)
+	if i != 1 {
 		t.Fail()
 	}
 }
 
-func testGetAnswer(t *testing.T) {
-	ans := getAnswer("11")
-	if ans != 2 {
+func testCalculateAnswer(t *testing.T) {
+	puz := puzzle{"1122", 1}
+	ans := puz.calculateAnswer()
+	if ans != 3 {
 		t.Fail()
 	}
 
-	ans = getAnswer("10")
-	if ans != 0 {
+	puz = puzzle{"1111", 1}
+	ans = puz.calculateAnswer()
+	if ans != 4 {
+		t.Fail()
+	}
+
+	puz = puzzle{"1212", 2}
+	ans = puz.calculateAnswer()
+	if ans != 6 {
 		t.Fail()
 	}
 }
