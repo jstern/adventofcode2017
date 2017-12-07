@@ -4,17 +4,6 @@ import (
 	"strconv"
 )
 
-var example = `
-36  35  34  33  32  31
-17  16  15  14  13  30
-18   5   4   3  12  29
-19   6   1   2  11  28
-20   7   8   9  10  27
-21  22  23  24  25  26
-`
-
-// 1 1 2 2 3 3
-
 var right = 0
 var up = 1
 var left = 2
@@ -22,18 +11,26 @@ var down = 3
 
 var dirs = []int{right, up, left, down}
 
+type coord struct {
+	x int
+	y int
+}
+
 type allocator struct {
 	pos              int
 	dir              int
 	runLength        int
 	runUsed          int
 	runsLeftAtLength int
-	dX               int
-	dY               int
+	x                int
+	y                int
+	values           map[coord]int
 }
 
 func newAllocator() *allocator {
-	return &allocator{1, right, 1, 0, 2, 0, 0}
+	values := make(map[coord]int)
+	values[coord{0, 0}] = 1
+	return &allocator{1, right, 1, 0, 2, 0, 0, values}
 }
 
 func (a *allocator) turn() {
@@ -45,19 +42,18 @@ func (a *allocator) turn() {
 }
 
 func (a *allocator) advance() {
-	a.pos++
 	a.runUsed++
 	if a.dir == right {
-		a.dX++
+		a.x++
 	}
 	if a.dir == left {
-		a.dX--
+		a.x--
 	}
 	if a.dir == up {
-		a.dY++
+		a.y++
 	}
 	if a.dir == down {
-		a.dY--
+		a.y--
 	}
 	if a.runUsed == a.runLength {
 		a.turn()
@@ -68,6 +64,8 @@ func (a *allocator) advance() {
 		}
 		a.runUsed = 0
 	}
+	a.pos++
+	a.setValue()
 }
 
 func (a *allocator) advanceTo(n int) {
@@ -76,8 +74,25 @@ func (a *allocator) advanceTo(n int) {
 	}
 }
 
-func (a *allocator) distance() int {
-	return abs(a.dX) + abs(a.dY)
+func (a allocator) distance() int {
+	return abs(a.x) + abs(a.y)
+}
+
+func (a *allocator) setValue() {
+	v := 0
+	for x := -1; x < 2; x++ {
+		for y := -1; y < 2; y++ {
+			// this will include the current position,
+			// but that's because its value is 0
+			// (assuming this is called once)
+			v += a.values[coord{a.x + x, a.y + y}]
+		}
+	}
+	a.values[coord{a.x, a.y}] = v
+}
+
+func (a allocator) lastValue() int {
+	return a.values[coord{a.x, a.y}]
 }
 
 func abs(i int) int {
@@ -91,4 +106,17 @@ func Answer() string {
 	a := newAllocator()
 	a.advanceTo(277678)
 	return strconv.FormatInt(int64(a.distance()), 10)
+}
+
+func Answer2() string {
+	a := newAllocator()
+	v := 0
+	for {
+		a.advance()
+		v = a.lastValue()
+		if v > 277678 {
+			break
+		}
+	}
+	return strconv.FormatInt(int64(v), 10)
 }

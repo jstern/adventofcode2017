@@ -27,6 +27,8 @@ func main() {
 		ex = ex2.Answer2
 	case "3":
 		ex = ex3.Answer
+	case "3a":
+		ex = ex3.Answer2
 	default:
 		panic("No such exercise")
 	}
