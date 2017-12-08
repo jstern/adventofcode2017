@@ -9,7 +9,10 @@ var up = 1
 var left = 2
 var down = 3
 
-var dirs = []int{right, up, left, down}
+var dirs = [4]int{right, up, left, down}
+var turns = [4]int{up, left, down, right}
+var dxs = [4]int{1, 0, -1, 0}
+var dys = [4]int{0, 1, 0, -1}
 
 type coord struct {
 	x int
@@ -34,27 +37,13 @@ func newAllocator() *allocator {
 }
 
 func (a *allocator) turn() {
-	next := a.dir + 1
-	if next > down {
-		next = 0
-	}
-	a.dir = dirs[next]
+	a.dir = turns[a.dir]
 }
 
 func (a *allocator) advance() {
 	a.runUsed++
-	if a.dir == right {
-		a.x++
-	}
-	if a.dir == left {
-		a.x--
-	}
-	if a.dir == up {
-		a.y++
-	}
-	if a.dir == down {
-		a.y--
-	}
+	a.x += dxs[a.dir]
+	a.y += dys[a.dir]
 	if a.runUsed == a.runLength {
 		a.turn()
 		a.runsLeftAtLength--
