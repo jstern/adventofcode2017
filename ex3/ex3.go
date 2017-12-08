@@ -72,7 +72,7 @@ func (a *allocator) setValue() {
 	for x := -1; x < 2; x++ {
 		for y := -1; y < 2; y++ {
 			// this will include the current position,
-			// but that's because its value is 0
+			// but that's ok because its value is 0
 			// (assuming this is called once)
 			v += a.values[coord{a.x + x, a.y + y}]
 		}
