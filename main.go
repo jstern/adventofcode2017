@@ -9,6 +9,7 @@ import (
 	"github.com/jstern/adventofcode2017/ex3"
 	"github.com/jstern/adventofcode2017/ex4"
 	"github.com/jstern/adventofcode2017/ex5"
+	"github.com/jstern/adventofcode2017/ex6"
 )
 
 type exercise func() string
@@ -39,6 +40,11 @@ func main() {
 		ex = ex5.Answer
 	case "5a":
 		ex = ex5.Answer2
+	case "6":
+		ex = ex6.Answer
+	case "6a":
+		ex = ex6.Answer2
+
 	default:
 		panic("No such exercise")
 	}
