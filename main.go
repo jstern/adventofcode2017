@@ -11,6 +11,7 @@ import (
 	"github.com/jstern/adventofcode2017/ex5"
 	"github.com/jstern/adventofcode2017/ex6"
 	"github.com/jstern/adventofcode2017/ex7"
+	"github.com/jstern/adventofcode2017/ex8"
 )
 
 type exercise func() string
@@ -51,6 +52,8 @@ func main() {
 		ex = ex7.Answer2
 	case "7e":
 		ex = ex7.Example
+	case "8":
+		ex = ex8.Answer
 	default:
 		panic("No such exercise")
 	}
