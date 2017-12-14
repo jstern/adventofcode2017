@@ -26,3 +26,24 @@ func TestReader(t *testing.T) {
 		assert.Equal(t, tt.score, r.total)
 	}
 }
+
+var garbagetests = []struct {
+	in    string
+	total int
+}{
+	{"<>", 0},
+	{"<random characters>", 17},
+	{"<<<<>", 3},
+	{"<{!>}>", 2},
+	{"<!!>", 0},
+	{"<!!!>>", 0},
+	{"<{o\"i!a,<{i<a>", 10},
+}
+
+func TestGarbage(t *testing.T) {
+	for _, tt := range garbagetests {
+		r := makeReader(tt.in)
+		r.read()
+		assert.Equal(t, tt.total, r.garbageTotal)
+	}
+}
