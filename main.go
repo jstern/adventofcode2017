@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/jstern/adventofcode2017/ex1"
+	"github.com/jstern/adventofcode2017/ex10"
 	"github.com/jstern/adventofcode2017/ex2"
 	"github.com/jstern/adventofcode2017/ex3"
 	"github.com/jstern/adventofcode2017/ex4"
@@ -57,6 +58,10 @@ func main() {
 		ex = ex8.Answer
 	case "9":
 		ex = ex9.Answer
+	case "10":
+		ex = ex10.Answer
+	case "10a":
+		ex = ex10.Answer2
 	default:
 		panic("No such exercise")
 	}
